@@ -54,7 +54,9 @@
         font-size: 0.875em;
     }
 </style>
+
 <div class="card card-primary">
+<img src="img/pans.png" alt="Imagen de encabezado" class="outside-image">
 <div class="card-header"><h4 class="text-black">Registro</h4></div>
 
     <div class="card-body pt-1">

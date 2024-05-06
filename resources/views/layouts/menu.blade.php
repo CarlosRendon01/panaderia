@@ -18,26 +18,5 @@
     </li>
     @endcanany
 
-    @can(['ver-estudiante', 'crear-estudiante', 'editar-estudiante', 'borrar-estudiante'])
-    <li class="{{ Request::is('estudiantes*') ? 'active' : '' }}">
-        <a class="nav-link" href="/estudiantes">
-            <i class="fas fa-user-graduate"></i><span class="menu-text">Estudiantes</span>
-        </a>
-    </li>
-    @endcan
-
-    <li class="{{ Request::is('inscripciones*') ? 'active' : '' }}">
-        <a class="nav-link" href="/inscripciones">
-            <i class="fas fa-user-graduate"></i><span class="menu-text">Inscribir Estudiante</span>
-        </a>
-    </li>
-
-    @can('ver-grupos')
-    <li class="{{ Request::is('grupos') ? 'active' : '' }}">
-        <a class="nav-link" href="/grupos">
-            <i class="fas fa-users"></i><span class="menu-text">Grupos</span>
-        </a>
-    </li>
-    @endcan
 </ul>
 @endif
