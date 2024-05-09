@@ -18,30 +18,38 @@ class SeederTablaPermisos extends Seeder
     {
         $permisos = [
             //Operaciones sobre tabla roles
+            'ver-usuario',
+            'crear-usuario',
+            'editar-usuario',
+            'borrar-usuario',
+
+            //Operacions sobre tabla blogs
             'ver-rol',
             'crear-rol',
             'editar-rol',
             'borrar-rol',
 
-            //Operacions sobre tabla blogs
-            'ver-estudiante',
-            'crear-estudiante',
-            'editar-estudiante',
-            'borrar-estudiante',
-
-            'ver-usuario',
-            'crear-usuario',
-            'editar-usuario',
-            'borrar-usuario',
+            'ver-producto',
+            'crear-producto',
+            'editar-producto',
+            'borrar-producto',
+            'cargar-producto',
             
-            'ver-inscripcion',
-            'crear-inscripcion',
-            'editar-inscripcion',
-            'borrar-inscripcion',
+            'ver-materia_prima',
+            'crear-materia_prima',
+            'editar-materia_prima',
+            'borrar-materia_prima',
+            'cargar-materia_prima',
 
-
-            'ver-grupos',
-            'ver_excel_grupo',
+            'ver-pedido',
+            'crear-pedido',
+            'editar-pedido',
+            'borrar-pedido',
+            
+            'ver-punto_venta',
+            'crear-punto_venta',
+            'editar-punto_venta',
+            'borrar-punto_venta',
         ];
 
         foreach($permisos as $permiso) {

@@ -389,6 +389,7 @@
 </div>
     
     <script>
+        
         function showLoginForm() {
             document.getElementById("loginContainer").style.display = "block";
             document.querySelector(".blurred-background").classList.add("visible");
