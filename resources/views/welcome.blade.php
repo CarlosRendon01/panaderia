@@ -360,7 +360,7 @@
               </div>
           </div>
           <button type="submit">Iniciar Sesión</button>
-          <button onclick="hideLoginForm()">Cancelar</button>
+          <button type="button" onclick="hideLoginForm()">Cancelar</button>
       </form>
   </div>
   <div class="register-container" id="registerContainer" style="display: none;">
@@ -384,18 +384,23 @@
             {{ $errors->first('password_confirmation') }}
         </div>
         <button type="submit">Registrarse</button>
-        <button onclick="hideRegisterForm()">Cancelar</button>
+        <button type="button" onclick="hideRegisterForm()">Cancelar</button>
     </form>
 </div>
     
     <script>
-        
+        document.addEventListener('DOMContentLoaded', function () {
+    // Revisa si hay errores y muestra la ventana de inicio de sesión
+    if (document.querySelectorAll('.alert-danger').length > 0) {
+        showLoginForm();
+    }
+});
         function showLoginForm() {
             document.getElementById("loginContainer").style.display = "block";
             document.querySelector(".blurred-background").classList.add("visible");
             document.getElementById("loginContainer").classList.add("focused");
         }
-        function showRegisterForm() {
+    function showRegisterForm() {
     document.getElementById("registerContainer").style.display = "block";
     document.querySelector(".blurred-background").classList.add("visible");
     document.getElementById("registerContainer").classList.add("focused");
@@ -404,11 +409,16 @@ function hideLoginForm() {
             document.getElementById("loginContainer").style.display = "none";
             document.querySelector(".blurred-background").classList.remove("visible");
             document.getElementById("loginContainer").classList.remove("focused");
+            scrollToMainView();
         }
         function hideRegisterForm() {
             document.getElementById("registerContainer").style.display = "none";
             document.querySelector(".blurred-background").classList.remove("visible");
             document.getElementById("registerContainer").classList.remove("focused");
+            scrollToMainView();
+        }
+        function scrollToMainView() {
+            document.getElementById("mainView").scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
