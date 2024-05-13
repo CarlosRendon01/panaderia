@@ -1,133 +1,425 @@
-@extends('layouts.auth_app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panadería El Triunfo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #180f01 0%, #3a1e03 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-@section('title')
-    Inicio de Sesión de Administrador
-@endsection
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/W5fcpn4/9696253.jpg');
+            background-repeat: repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
 
-@section('content')
-<style>
-    /* Estilos generales del formulario */
-    .card {
-        border-radius: 10px; /* Bordes más suaves */
-        box-shadow: 0 4px 6px rgba(50,50,93,0.11), 0 1px 3px rgba(0,0,0,0.08); /* Sombra más pronunciada */
-        transition: all 0.3s ease-in-out; /* Transición más suave */
-        border: none; /* Eliminar el borde para un look más limpio */
-        background: #ffffff; /* Fondo blanco para mejor contraste */
-    }
-    .card-header {
-        background-color: #667eea; /* Un color azul ligeramente diferente */
-        color: #ffffff;
-        font-size: 11px; /* Ligeramente más grande para más énfasis */
-        padding: 8px 12px; /* Ajuste de padding para un mejor aspecto */
-        border-bottom: none; /* Eliminar el borde inferior para un look más limpio */
-        border-top-left-radius: 7px; /* Asegurar consistencia en bordes redondeados */
-        border-top-right-radius: 7px;
-    }
-    .btn-primary {
-        background-color: #5a67d8; /* Ajuste del color principal */
-        border: none;
-        border-radius: 25px; /* Bordes aún más redondeados para botones */
-        padding: 12px 30px; /* Ajuste de padding para un botón más prominente */
-        font-size: 18px; /* Tamaño de fuente más grande para mejorar legibilidad */
-        transition: background-color 0.2s, transform 0.2s; /* Añadir efecto de transformación */
-        box-shadow: 0 4px 6px rgba(50,50,93,0.11), 0 1px 3px rgba(0,0,0,0.08); /* Sombra consistente con la tarjeta */
-    }
-    .btn-primary:hover {
-        background-color: #434190; /* Oscurecer al pasar el mouse */
-        transform: translateY(-2px); /* Ligero efecto de elevación al pasar el mouse */
-    }
-    .form-control {
-        border-radius: 25px; /* Consistencia en bordes redondeados */
-        border: 1px solid #e2e8f0; /* Color de borde más suave */
-        transition: border-color 0.2s, box-shadow 0.2s; /* Transición suave para enfoque */
-        box-shadow: none; /* Eliminar sombra interna para un look más limpio */
-    }
-    .form-control:focus {
-        border-color: #667eea; /* Cambio de color en el foco */
-        box-shadow: 0 0 0 1px rgba(102,126,234,0.5); /* Sombra de foco suave y coherente */
-    }
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: #5a67d8; /* Consistente con el color principal */
-        border-color: #5a67d8;
-    }
-    .alert-danger {
-        background-color: #fef2f2; /* Fondo más suave para el alerta */
-        border-color: #fed7d7; /* Borde coherente con el fondo */
-        color: #e53e3e; /* Color de texto que contraste bien */
-        padding: 12px; /* Ajuste de padding */
-        border-radius: 10px; /* Bordes redondeados */
-    }
-    .text-small {
-        font-size: 0.875em; /* Mantener tamaño de fuente pequeño */
-    }
-    .form-group {
-        margin-bottom: 1.25rem; /* Ajuste de margen para mejor espaciado */
-    }
-    .outside-image {
-        width: 100%;
-        height: 100%; /* Altura de la imagen */
-        object-fit: cover; /* Ajustar imagen al contenedor sin distorsionar */
-        border-top-left-radius: 10px; /* Asegurar consistencia en bordes redondeados */
-        border-top-right-radius: 10px;
-    }
-</style>
+        .container {
+            max-width: 900px;
+            padding: 60px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        .left-section {
+            flex: 1;
+            padding-right: 40px;
+            text-align: center;
+        }
 
-<div class="card card-primary">
-    <img src="img/pans.png" alt="Imagen de encabezado" class="outside-image">
+        .right-section {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
 
-    <div class="card-header"><h4 class="text-black">Inicio de Sesión</h4></div>
+        .bread-pattern {
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 200px;
+            height: 200px;
+            background-image: url('https://i.ibb.co/6nG5Y2Q/554doughnut1-100951.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            animation: rotate 10s infinite linear;
+        }
 
-    <div class="card-body">
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <p>Por favor, corrige los siguientes errores:</p>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        .bread-pattern-2 {
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 250px;
+            height: 250px;
+            background-image: url('https://i.ibb.co/nmrwwZZ/pngegg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            transform: rotate(30deg);
+            animation: rotate 15s infinite linear reverse;
+        }
 
-            <div class="form-group">
-                <label for="email">Correo Electrónico</label>
-                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Ingresa tu correo" tabindex="1" value="{{ old('email', Cookie::get('email')) }}" autofocus required>
-                @if ($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .baker-image {
+            max-width: 100%;
+            height: auto;
+            animation: moveHorizontal 5s infinite alternate;
+        }
+
+        @keyframes moveHorizontal {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(20px);
+            }
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .buttons button {
+            padding: 12px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            background-color: #FF9800;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buttons button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .buttons button:hover::before {
+            left: 100%;
+        }
+
+        .buttons button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Added styles for login form */
+        .login-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            backdrop-filter: blur(5px); /* Blur the background only */
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #FFA726;
+        }
+       
+        .login-container.focused {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .blurred-background::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            z-index: 99;
+            display: none;
+        }
+
+        .blurred-background.visible::before {
+            display: block;
+        }
+
+        .login-container.focused {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        .register-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.register-form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-form button:hover {
+    background-color: #FFA726;
+}
+
+.register-container.focused {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}.login-container, .register-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            max-width: 500px; /* Aumenta el ancho máximo */
+            width: 90%;
+        }
+
+        .login-form, .register-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-form input, .register-form input {
+            margin: 10px 0;
+            width: 100%; /* Establece el ancho al 100% del formulario */
+        }
+
+        .login-form button, .register-form button {
+            margin-top: 20px;
+            width: 100%; /* Establece el ancho al 100% del formulario */
+        }
+
+        
+        .login-form {
+    display: flex; /* Usa flexbox para alinear los elementos */
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+}
+
+.login-form input {
+    width: calc(100% - 20px); /* Resta el margen vertical (10px arriba y 10px abajo) */
+    padding: 10px;
+    margin: 10px 0; /* Ajusta el margen vertical de los campos */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+<!-- Dentro de la etiqueta <style> -->
+.login-form input, .register-form input, .login-form button, .register-form button {
+    width: 100%; /* Establece el ancho al 100% para ocupar todo el contenedor */
+    margin: 10px 0; /* Ajusta el margen vertical de los campos y botones */
+}
+
+.login-form {
+    display: flex; /* Usa flexbox para alinear los elementos */
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+}
+
+.login-form button {
+    margin-top: 10px; /* Ajusta el margen superior de los botones */
+}
+
+
+    </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+    <div class="container blurred-background">
+        <div class="bread-pattern"></div>
+        <div class="bread-pattern-2"></div>
+        <div class="left-section">
+            <h1 style="font-size: 3rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">PANADERÍA EL TRIUNFO</h1>
+            <p style="font-size: 1.2rem; color: #666;">Bienvenido al sistema de la Panadería El Triunfo </p>
+            <div class="buttons">
+                <button onclick="showLoginForm()">Login</button>
+                <button onclick="showRegisterForm()">Registrarse</button>
             </div>
-
-            <div class="form-group">
-                <label for="password" class="control-label">Contraseña</label>
-                <a href="{{ route('password.request') }}" class="text-small">
-                    ¿Olvidaste tu contraseña?
-                </a>
-                <input id="password" type="password" placeholder="Ingresa tu contraseña" class="form-control{{ $errors->has('password') ? ' is-invalid': '' }}" name="password" tabindex="2" required>
-                @if ($errors->has('password'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('password') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember"{{ old('remember', Cookie::get('remember')) ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="remember">Recuérdame</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                    Iniciar Sesión
-                </button>
-            </div>
-        </form>
+        </div>
+        <div class="right-section">
+            <img class="baker-image" src="https://i.ibb.co/D5sLS9N/baker-817282.png" alt="Panadero">
+        </div>
     </div>
+    <div class="login-container" id="loginContainer" style="display: none;">
+      <h2>Iniciar Sesión</h2>
+      <form class="login-form" method="POST" action="{{ route('login') }}">
+          @csrf
+          @if ($errors->any())
+          <div class="alert alert-danger p-0">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+          @endif
+          <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" placeholder="Ingresa tu correo electrónico" id="email" name="email" value="{{ (Cookie::get('email') !== null) ? Cookie::get('email') : old('email') }}" required autofocus>
+          </div>
+          <div class="form-group">
+              <label for="password" class="control-label">Contraseña</label>
+              <input type="password" placeholder="Ingresa tu contraseña" id="password" name="password" value="{{ (Cookie::get('password') !== null) ? Cookie::get('password') : null }}" required>
+              <div class="forgot-password">
+                  <a href="{{ route('password.request') }}" class="text-small">¿Olvidaste tu contraseña?</a>
+              </div>
+          </div>
+          <button type="submit">Iniciar Sesión</button>
+          <button type="button" onclick="hideLoginForm()">Cancelar</button>
+      </form>
+  </div>
+  <div class="register-container" id="registerContainer" style="display: none;">
+    <h2>Registrarse</h2>
+    <form class="register-form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+        @csrf
+        <input type="text" placeholder="Nombre completo" name="name" value="{{ old('name') }}" required autofocus>
+        <div class="invalid-feedback">
+            {{ $errors->first('name') }}
+        </div>
+        <input type="email" placeholder="Correo electrónico" name="email" value="{{ old('email') }}" required>
+        <div class="invalid-feedback">
+            {{ $errors->first('email') }}
+        </div>
+        <input type="password" placeholder="Contraseña" name="password" required>
+        <div class="invalid-feedback">
+            {{ $errors->first('password') }}
+        </div>
+        <input type="password" placeholder="Confirmar contraseña" name="password_confirmation" required>
+        <div class="invalid-feedback">
+            {{ $errors->first('password_confirmation') }}
+        </div>
+        <button type="submit">Registrarse</button>
+        <button type="button" onclick="hideRegisterForm()">Cancelar</button>
+    </form>
 </div>
-
-@endsection
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    // Revisa si hay errores y muestra la ventana de inicio de sesión
+    if (document.querySelectorAll('.alert-danger').length > 0) {
+        showLoginForm();
+    }
+});
+        function showLoginForm() {
+            document.getElementById("loginContainer").style.display = "block";
+            document.querySelector(".blurred-background").classList.add("visible");
+            document.getElementById("loginContainer").classList.add("focused");
+        }
+    function showRegisterForm() {
+    document.getElementById("registerContainer").style.display = "block";
+    document.querySelector(".blurred-background").classList.add("visible");
+    document.getElementById("registerContainer").classList.add("focused");
+}
+function hideLoginForm() {
+            document.getElementById("loginContainer").style.display = "none";
+            document.querySelector(".blurred-background").classList.remove("visible");
+            document.getElementById("loginContainer").classList.remove("focused");
+            scrollToMainView();
+        }
+        function hideRegisterForm() {
+            document.getElementById("registerContainer").style.display = "none";
+            document.querySelector(".blurred-background").classList.remove("visible");
+            document.getElementById("registerContainer").classList.remove("focused");
+            scrollToMainView();
+        }
+        function scrollToMainView() {
+            document.getElementById("mainView").scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
